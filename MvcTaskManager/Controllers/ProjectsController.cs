@@ -19,6 +19,23 @@ namespace MvcTaskManager.Controllers
             return projects;
         }
 
+        [HttpGet]
+        [Route("api/projects/search/{searchby}/{searchtext}")]
+        public List<Project> Search(string searchBy, string searchText)
+        {
+            TaskManagerDbContext db = new TaskManagerDbContext();
+            List<Project> projects = null;
+            if (searchBy == "ProjectID")
+                projects = db.Projects.Where(temp => temp.ProjectID.ToString().Contains(searchText)).ToList();
+            else if (searchBy == "ProjectName")
+                projects = db.Projects.Where(temp => temp.ProjectName.Contains(searchText)).ToList();
+            else if (searchBy == "DateOfStart")
+                projects = db.Projects.Where(temp => temp.DateOfStart.ToString().Contains(searchText)).ToList();
+            else if (searchBy == "TeamSize")
+                projects = db.Projects.Where(temp => temp.TeamSize.ToString().Contains(searchText)).ToList();
+            return projects;
+        }
+
         [HttpPost]
         [Route("api/projects")]
         public Project Post([FromBody] Project project)
