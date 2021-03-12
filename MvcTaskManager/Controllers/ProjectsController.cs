@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MvcTaskManager.Identity;
 using MvcTaskManager.Models;
 
 namespace MvcTaskManager.Controllers
@@ -10,11 +11,17 @@ namespace MvcTaskManager.Controllers
 
     public class ProjectsController : Controller
     {
+        private ApplicationDbContext db;
+
+        public ProjectsController(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
+
         [HttpGet]
         [Route("api/projects")]
         public List<Project> Get()
-        {
-            TaskManagerDbContext db = new TaskManagerDbContext();
+        {            
             List<Project> projects = db.Projects.ToList();
             return projects;
         }
@@ -22,8 +29,7 @@ namespace MvcTaskManager.Controllers
         [HttpGet]
         [Route("api/projects/search/{searchby}/{searchtext}")]
         public List<Project> Search(string searchBy, string searchText)
-        {
-            TaskManagerDbContext db = new TaskManagerDbContext();
+        {           
             List<Project> projects = null;
             if (searchBy == "ProjectID")
                 projects = db.Projects.Where(temp => temp.ProjectID.ToString().Contains(searchText)).ToList();
@@ -39,8 +45,7 @@ namespace MvcTaskManager.Controllers
         [HttpPost]
         [Route("api/projects")]
         public Project Post([FromBody] Project project)
-        {
-            TaskManagerDbContext db = new TaskManagerDbContext();
+        {            
             db.Projects.Add(project);
             db.SaveChanges();
             return project;
@@ -49,8 +54,7 @@ namespace MvcTaskManager.Controllers
         [HttpPut]
         [Route("api/projects")]
         public Project Put([FromBody] Project project)
-        {
-            TaskManagerDbContext db = new TaskManagerDbContext();
+        {            
             Project existingProject = db.Projects.Where(temp => temp.ProjectID == project.ProjectID).FirstOrDefault();
             if (existingProject != null)
             {
@@ -69,8 +73,7 @@ namespace MvcTaskManager.Controllers
         [HttpDelete]
         [Route("api/projects")]
         public int Delete(int ProjectID)
-        {
-            TaskManagerDbContext db = new TaskManagerDbContext();
+        {            
             Project existingProject = db.Projects.Where(temp => temp.ProjectID == ProjectID).FirstOrDefault();
             if (existingProject != null)
             {
