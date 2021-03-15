@@ -23,3 +23,4 @@ C:\Users\usuario\Documents\Programacion\Angular\MvcTaskManager\MvcTaskManager\ob
 C:\Users\usuario\Documents\Programacion\Angular\MvcTaskManager\MvcTaskManager\obj\Debug\netcoreapp2.1\MvcTaskManager.dll
 C:\Users\usuario\Documents\Programacion\Angular\MvcTaskManager\MvcTaskManager\obj\Debug\netcoreapp2.1\MvcTaskManager.pdb
 C:\Users\usuario\Documents\Programacion\Angular\MvcTaskManager\MvcTaskManager\obj\Debug\netcoreapp2.1\MvcTaskManager.csproj.CopyComplete
+C:\Users\usuario\Documents\Programacion\Angular\MvcTaskManager\MvcTaskManager\bin\Debug\netcoreapp2.1\appsettings.json

@@ -9,8 +9,8 @@ namespace MvcTaskManager.Identity
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, String>
     {
-        public ApplicationDbContext(DbContextOptions options): base(options) 
-        { 
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
         }
 
         public DbSet<Project> Projects { get; set; }
@@ -20,6 +20,5 @@ namespace MvcTaskManager.Identity
         {
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }

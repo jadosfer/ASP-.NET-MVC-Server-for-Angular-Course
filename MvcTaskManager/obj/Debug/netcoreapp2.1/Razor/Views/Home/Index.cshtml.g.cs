@@ -43,7 +43,7 @@ namespace AspNetCore
             WriteLiteral("<!doctype html>\n<html lang=\"en\">\n");
             EndContext();
             BeginContext(33, 273, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8d334d6db3584c379afbe95e0e63b03c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f875edbfaebb48b5a9f08afe552645c8", async() => {
                 BeginContext(39, 260, true);
                 WriteLiteral(@"
     <meta charset=""utf-8"">
@@ -70,7 +70,7 @@ namespace AspNetCore
             WriteLiteral("\n");
             EndContext();
             BeginContext(307, 263, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "457fdc5fac6143c98ef9835b6e274e14", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0fd096bf70e0402db820b5402a81417f", async() => {
                 BeginContext(313, 250, true);
                 WriteLiteral("\n    <app-root></app-root>\n    <script src=\"runtime.js\" defer></script>\n    <script src=\"polyfills.js\" defer></script>\n    <script src=\"scripts.js\" defer></script>\n    <script src=\"vendor.js\" defer></script>\n    <script src=\"main.js\" defer></script>\n");
                 EndContext();
