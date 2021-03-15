@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MvcTaskManager.Identity;
 using MvcTaskManager.Models;
 
 namespace MvcTaskManager.Controllers
 {
-
+    [Authorize]
     public class ProjectsController : Controller
     {
         private ApplicationDbContext db;
@@ -19,7 +20,7 @@ namespace MvcTaskManager.Controllers
         }
 
         [HttpGet]
-        [Route("api/projects")]
+        [Route("api/projects")]        
         public List<Project> Get()
         {            
             List<Project> projects = db.Projects.ToList();
