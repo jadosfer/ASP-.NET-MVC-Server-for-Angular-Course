@@ -69,10 +69,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Project", function() { return Project; });
 class Project {
     constructor() {
-        this.projectID = 0;
-        this.projectName = "";
-        this.dateOfStart = "";
-        this.teamSize = 0;
+        this.projectID = null;
+        this.projectName = null;
+        this.dateOfStart = null;
+        this.teamSize = null;
     }
 }
 
@@ -197,15 +197,18 @@ class ProjectsComponent {
         this.projects = [];
         this.newProject = new src_app_project__WEBPACK_IMPORTED_MODULE_0__["Project"]();
         this.editProject = new src_app_project__WEBPACK_IMPORTED_MODULE_0__["Project"]();
-        this.editIndex = 0;
+        this.editIndex = null;
         this.deleteProject = new src_app_project__WEBPACK_IMPORTED_MODULE_0__["Project"]();
-        this.deleteIndex = 0;
+        this.deleteIndex = null;
         this.searchBy = "ProjectName";
         this.searchText = "";
     }
     ngOnInit() {
         this.projectsService.getAllProjects().subscribe((response) => {
             this.projects = response;
+        }, (error) => {
+            console.log(error);
+            alert("Authentication failed");
         });
     }
     onSaveClick() {
@@ -218,10 +221,10 @@ class ProjectsComponent {
             p.teamSize = response.teamSize;
             this.projects.push(p);
             //Clear New Project Dialog - TextBoxes
-            this.newProject.projectID = 0;
-            this.newProject.projectName = "";
-            this.newProject.dateOfStart = "";
-            this.newProject.teamSize = 0;
+            this.newProject.projectID = null;
+            this.newProject.projectName = null;
+            this.newProject.dateOfStart = null;
+            this.newProject.teamSize = null;
         }, (error) => {
             console.log(error);
         });
@@ -241,10 +244,10 @@ class ProjectsComponent {
             p.dateOfStart = response.dateOfStart;
             p.teamSize = response.teamSize;
             this.projects[this.editIndex] = p;
-            this.editProject.projectID = 0;
-            this.editProject.projectName = "";
-            this.editProject.dateOfStart = "";
-            this.editProject.teamSize = 0;
+            this.editProject.projectID = null;
+            this.editProject.projectName = null;
+            this.editProject.dateOfStart = null;
+            this.editProject.teamSize = null;
         }, (error) => {
             console.log(error);
         });
@@ -259,16 +262,16 @@ class ProjectsComponent {
     onDeleteConfirmClick() {
         this.projectsService.deleteProject(this.deleteProject.projectID).subscribe((response) => {
             this.projects.splice(this.deleteIndex, 1);
-            this.deleteProject.projectID = 0;
-            this.deleteProject.projectName = "";
-            this.deleteProject.dateOfStart = "";
-            this.deleteProject.teamSize = 0;
+            this.deleteProject.projectID = null;
+            this.deleteProject.projectName = null;
+            this.deleteProject.teamSize = null;
+            this.deleteProject.dateOfStart = null;
         }, (error) => {
             console.log(error);
         });
     }
     onSearchClick() {
-        this.projectsService.searchProjects(this.searchBy, this.searchText).subscribe((response) => {
+        this.projectsService.SearchProjects(this.searchBy, this.searchText).subscribe((response) => {
             this.projects = response;
         }, (error) => {
             console.log(error);
@@ -687,15 +690,15 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginService.currentUserName != "");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginService.currentUserName != null);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginService.currentUserName != "");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginService.currentUserName != null);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginService.currentUserName != "");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginService.currentUserName != null);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginService.currentUserName != "");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginService.currentUserName != null);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginService.currentUserName == "");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginService.currentUserName == null);
     } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterLinkWithHref"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["NgForm"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterOutlet"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */"] });
 
 
@@ -712,10 +715,6 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginViewModel", function() { return LoginViewModel; });
 class LoginViewModel {
-    constructor() {
-        this.UserName = "";
-        this.Password = "";
-    }
 }
 
 
@@ -786,19 +785,22 @@ __webpack_require__.r(__webpack_exports__);
 class LoginService {
     constructor(httpClient) {
         this.httpClient = httpClient;
-        this.currentUserName = "";
+        this.currentUserName = null;
     }
     Login(loginViewModel) {
         return this.httpClient.post("/authenticate", loginViewModel, { responseType: "json" })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(user => {
             if (user) {
-                this.currentUserName = user.UserName;
+                console.log("nombre user: " + user.userName);
+                this.currentUserName = user.userName;
+                sessionStorage.currentUser = JSON.stringify(user);
             }
             return user;
         }));
     }
     Logout() {
-        this.currentUserName = "";
+        sessionStorage.removeItem("currentUser");
+        this.currentUserName = null;
     }
 }
 LoginService.ɵfac = function LoginService_Factory(t) { return new (t || LoginService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
@@ -1094,8 +1096,8 @@ function DashboardComponent_div_105_Template(rf, ctx) { if (rf & 1) {
 class DashboardComponent {
     constructor(dashboardService) {
         this.dashboardService = dashboardService;
-        this.Designation = "";
-        this.Username = "";
+        this.Designation = null;
+        this.Username = null;
         this.NoOfTeamMembers = 0;
         this.TotalCostOfAllProjects = 0;
         this.PendingTasks = 0;
@@ -1570,9 +1572,10 @@ _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["platformBrowser"]().boot
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectsService", function() { return ProjectsService; });
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "IheW");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "IheW");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
 
 
 
@@ -1581,8 +1584,15 @@ class ProjectsService {
         this.httpClient = httpClient;
     }
     getAllProjects() {
-        return this.httpClient.get("api/projects", { responseType: "json" })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])((data) => {
+        var currentUser = { token: "" };
+        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]();
+        headers = headers.set("Authorization", "Bearer ");
+        if (sessionStorage.currentUser != null) {
+            currentUser = JSON.parse(sessionStorage.currentUser);
+            headers = headers.set("Authorization", "Bearer " + currentUser.token);
+        }
+        return this.httpClient.get("/api/projects", { headers: headers, responseType: "json" })
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])((data) => {
             for (let i = 0; i < data.length; i++) {
                 data[i].teamSize = data[i].teamSize * 100;
             }
@@ -1590,20 +1600,20 @@ class ProjectsService {
         }));
     }
     insertProject(newProject) {
-        return this.httpClient.post("api/projects", newProject, { responseType: "json" });
+        return this.httpClient.post("/api/projects", newProject, { responseType: "json" });
     }
     updateProject(existingProject) {
-        return this.httpClient.put("api/projects", existingProject, { responseType: "json" });
+        return this.httpClient.put("/api/projects", existingProject, { responseType: "json" });
     }
     deleteProject(ProjectID) {
-        return this.httpClient.delete("api/projects?ProjectID=" + ProjectID);
+        return this.httpClient.delete("/api/projects?ProjectID=" + ProjectID);
     }
-    searchProjects(searchBy, searchText) {
-        return this.httpClient.get("api/projects/search/" + searchBy + "/" + searchText, { responseType: "json" });
+    SearchProjects(searchBy, searchText) {
+        return this.httpClient.get("/api/projects/search/" + searchBy + "/" + searchText, { responseType: "json" });
     }
 }
-ProjectsService.ɵfac = function ProjectsService_Factory(t) { return new (t || ProjectsService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
-ProjectsService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: ProjectsService, factory: ProjectsService.ɵfac, providedIn: 'root' });
+ProjectsService.ɵfac = function ProjectsService_Factory(t) { return new (t || ProjectsService)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"])); };
+ProjectsService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjectable"]({ token: ProjectsService, factory: ProjectsService.ɵfac, providedIn: 'root' });
 
 
 /***/ }),
