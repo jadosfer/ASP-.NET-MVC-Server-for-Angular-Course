@@ -94,6 +94,15 @@ namespace MvcTaskManager
                     role.Name = "Admin";
                     await roleManager.CreateAsync(role);
                 }
+           
+
+                //Create Employee Role
+                if (!(await roleManager.RoleExistsAsync("Employee")))
+                {
+                    var role2 = new ApplicationRole();
+                    role2.Name = "Employee";
+                    await roleManager.CreateAsync(role2);
+                }
 
                 //Create Admin User
                 if ((await userManager.FindByNameAsync("admin")) == null)
@@ -109,12 +118,18 @@ namespace MvcTaskManager
                     }
                 }
 
-                //Create Employee Role
-                if (!(await roleManager.RoleExistsAsync("Employee")))
+                //Create Employee User
+                if ((await userManager.FindByNameAsync("slave")) == null)
                 {
-                    var role = new ApplicationRole();
-                    role.Name = "Employee";
-                    await roleManager.CreateAsync(role);
+                    var user2 = new ApplicationUser();
+                    user2.UserName = "slave";
+                    user2.Email = "slave@gmail.com";
+                    var userPassword = "Slave123#";
+                    var chkUser = await userManager.CreateAsync(user2, userPassword);
+                    if (chkUser.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(user2, "Employee");
+                    }
                 }
             }
 

@@ -15,6 +15,7 @@ namespace MvcTaskManager.Identity
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<IdentityRole> Roles { get; set; }
+        //  public DbSet<ApplicationRole> ApplicationRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
