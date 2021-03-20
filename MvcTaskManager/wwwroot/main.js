@@ -890,14 +890,14 @@ class LoginService {
     }
     Login(loginViewModel) {
         this.httpClient = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"](this.httpBackend); //esto tambien
-        return this.httpClient.post("/authenticate", loginViewModel, { responseType: "json" })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(user => {
-            if (user) {
-                console.log("nombre user: " + user.userName);
-                this.currentUserName = user.userName;
-                sessionStorage.currentUser = JSON.stringify(user);
+        return this.httpClient.post("/authenticate", loginViewModel, { responseType: "json", observe: "response" })
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(response => {
+            if (response) {
+                this.currentUserName = response.body.userName;
+                sessionStorage.currentUser = JSON.stringify(response.body);
+                sessionStorage.XSRFRequestToken = response.headers.get("XSRF-REQUEST-TOKEN");
             }
-            return user;
+            return response.body;
         }));
     }
     Logout() {
@@ -1725,9 +1725,10 @@ _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["platformBrowser"]().boot
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectsService", function() { return ProjectsService; });
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "IheW");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "IheW");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
 
 
 
@@ -1745,7 +1746,7 @@ class ProjectsService {
           headers = headers.set("Authorization", "Bearer " + currentUser.token);
         } */
         return this.httpClient.get("/api/projects", { responseType: "json" })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])((data) => {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])((data) => {
             for (let i = 0; i < data.length; i++) {
                 data[i].teamSize = data[i].teamSize * 100;
             }
@@ -1753,7 +1754,9 @@ class ProjectsService {
         }));
     }
     insertProject(newProject) {
-        return this.httpClient.post("/api/projects", newProject, { responseType: "json" });
+        var requestHeaders = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]();
+        requestHeaders = requestHeaders.set("X-XSRF-TOKEN", sessionStorage.XSRFRequestToken);
+        return this.httpClient.post("/api/projects", newProject, { headers: requestHeaders, responseType: "json" });
     }
     updateProject(existingProject) {
         return this.httpClient.put("/api/projects", existingProject, { responseType: "json" });
@@ -1765,8 +1768,8 @@ class ProjectsService {
         return this.httpClient.get("/api/projects/search/" + searchBy + "/" + searchText, { responseType: "json" });
     }
 }
-ProjectsService.ɵfac = function ProjectsService_Factory(t) { return new (t || ProjectsService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
-ProjectsService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: ProjectsService, factory: ProjectsService.ɵfac, providedIn: 'root' });
+ProjectsService.ɵfac = function ProjectsService_Factory(t) { return new (t || ProjectsService)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"])); };
+ProjectsService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjectable"]({ token: ProjectsService, factory: ProjectsService.ɵfac, providedIn: 'root' });
 
 
 /***/ }),

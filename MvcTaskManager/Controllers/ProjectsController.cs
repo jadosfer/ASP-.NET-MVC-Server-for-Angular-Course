@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MvcTaskManager.Identity;
 using MvcTaskManager.Models;
 
 namespace MvcTaskManager.Controllers
-{
-    [Authorize]
+{    
     public class ProjectsController : Controller
     {
         private ApplicationDbContext db;
@@ -20,7 +20,8 @@ namespace MvcTaskManager.Controllers
         }
 
         [HttpGet]
-        [Route("api/projects")]        
+        [Route("api/projects")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public List<Project> Get()
         {            
             List<Project> projects = db.Projects.ToList();
@@ -29,6 +30,7 @@ namespace MvcTaskManager.Controllers
 
         [HttpGet]
         [Route("api/projects/search/{searchby}/{searchtext}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public List<Project> Search(string searchBy, string searchText)
         {           
             List<Project> projects = null;
@@ -45,6 +47,8 @@ namespace MvcTaskManager.Controllers
 
         [HttpPost]
         [Route("api/projects")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public Project Post([FromBody] Project project)
         {            
             db.Projects.Add(project);
@@ -54,6 +58,7 @@ namespace MvcTaskManager.Controllers
 
         [HttpPut]
         [Route("api/projects")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Project Put([FromBody] Project project)
         {            
             Project existingProject = db.Projects.Where(temp => temp.ProjectID == project.ProjectID).FirstOrDefault();
@@ -73,6 +78,7 @@ namespace MvcTaskManager.Controllers
 
         [HttpDelete]
         [Route("api/projects")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public int Delete(int ProjectID)
         {            
             Project existingProject = db.Projects.Where(temp => temp.ProjectID == ProjectID).FirstOrDefault();

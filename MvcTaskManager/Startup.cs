@@ -58,9 +58,10 @@ namespace MvcTaskManager
             var key = System.Text.Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                //x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                //x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
+            .AddCookie()
             .AddJwtBearer(x => {
                 x.RequireHttpsMetadata = false;
                 x.TokenValidationParameters = new TokenValidationParameters()
@@ -70,6 +71,10 @@ namespace MvcTaskManager
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            });
+            services.AddAntiforgery(options => {
+                options.Cookie.Name = "XSRF-Cookie-TOKEN";
+                options.HeaderName = "X-XSRF-TOKEN";
             });
         }
 
