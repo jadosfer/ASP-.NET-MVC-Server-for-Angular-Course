@@ -124,18 +124,18 @@ namespace MvcTaskManager
                 }
 
                 //Create Employee User
-                if ((await userManager.FindByNameAsync("slave")) == null)
-                {
-                    var user2 = new ApplicationUser();
-                    user2.UserName = "slave";
-                    user2.Email = "slave@gmail.com";
-                    var userPassword = "Slave123#";
-                    var chkUser = await userManager.CreateAsync(user2, userPassword);
-                    if (chkUser.Succeeded)
-                    {
-                        await userManager.AddToRoleAsync(user2, "Employee");
-                    }
-                }
+                //if ((await userManager.FindByNameAsync("slave")) == null)
+                //{
+                //    var user2 = new ApplicationUser();
+                //    user2.UserName = "slave";
+                //    user2.Email = "slave@gmail.com";
+                //    var userPassword = "Slave123#";
+                //    var chkUser = await userManager.CreateAsync(user2, userPassword);
+                //    if (chkUser.Succeeded)
+                //    {
+                //        await userManager.AddToRoleAsync(user2, "Employee");
+                //    }
+                //}
             }
 
             app.Run(async (context) =>

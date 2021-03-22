@@ -24,15 +24,23 @@ namespace MvcTaskManager.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ConcurrencyStamp");
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedName");
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -126,23 +134,15 @@ namespace MvcTaskManager.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                    b.Property<string>("ConcurrencyStamp");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
+                    b.Property<string>("Name");
 
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
+                    b.Property<string>("NormalizedName");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("ApplicationRoles");
                 });
 
             modelBuilder.Entity("MvcTaskManager.Identity.ApplicationUser", b =>
@@ -196,24 +196,59 @@ namespace MvcTaskManager.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("MvcTaskManager.Models.ClientLocation", b =>
+                {
+                    b.Property<int>("ClientLocationID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClientLocationName");
+
+                    b.HasKey("ClientLocationID");
+
+                    b.ToTable("ClientLocations");
+
+                    b.HasData(
+                        new { ClientLocationID = 1, ClientLocationName = "Boston" },
+                        new { ClientLocationID = 2, ClientLocationName = "New Delhi" },
+                        new { ClientLocationID = 3, ClientLocationName = "New Jersy" },
+                        new { ClientLocationID = 4, ClientLocationName = "New York" },
+                        new { ClientLocationID = 5, ClientLocationName = "London" },
+                        new { ClientLocationID = 6, ClientLocationName = "Tokyo" }
+                    );
+                });
+
             modelBuilder.Entity("MvcTaskManager.Models.Project", b =>
                 {
                     b.Property<int>("ProjectID");
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int>("ClientLocationID");
 
                     b.Property<DateTime>("DateOfStart");
 
                     b.Property<string>("ProjectName");
 
-                    b.Property<int>("TeamSize");
+                    b.Property<string>("Status");
+
+                    b.Property<int?>("TeamSize");
 
                     b.HasKey("ProjectID");
 
+                    b.HasIndex("ClientLocationID");
+
                     b.ToTable("Projects");
+
+                    b.HasData(
+                        new { ProjectID = 1, Active = true, ClientLocationID = 2, DateOfStart = new DateTime(2017, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ProjectName = "Hospital Management System", Status = "In Force", TeamSize = 14 },
+                        new { ProjectID = 2, Active = true, ClientLocationID = 1, DateOfStart = new DateTime(2018, 3, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), ProjectName = "Reporting Tool", Status = "Support", TeamSize = 81 }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("MvcTaskManager.Identity.ApplicationRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -237,7 +272,7 @@ namespace MvcTaskManager.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("MvcTaskManager.Identity.ApplicationRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -253,6 +288,14 @@ namespace MvcTaskManager.Migrations
                     b.HasOne("MvcTaskManager.Identity.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MvcTaskManager.Models.Project", b =>
+                {
+                    b.HasOne("MvcTaskManager.Models.ClientLocation", "ClientLocation")
+                        .WithMany()
+                        .HasForeignKey("ClientLocationID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

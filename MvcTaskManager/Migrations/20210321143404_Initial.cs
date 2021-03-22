@@ -9,6 +9,20 @@ namespace MvcTaskManager.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "ApplicationRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    NormalizedName = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -48,31 +62,16 @@ namespace MvcTaskManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
+                name: "ClientLocations",
                 columns: table => new
                 {
-                    ProjectID = table.Column<int>(nullable: false),
-                    ProjectName = table.Column<string>(nullable: true),
-                    DateOfStart = table.Column<DateTime>(nullable: false),
-                    TeamSize = table.Column<int>(nullable: false)
+                    ClientLocationID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClientLocationName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.ProjectID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    NormalizedName = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_ClientLocations", x => x.ClientLocationID);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,6 +180,52 @@ namespace MvcTaskManager.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    ProjectID = table.Column<int>(nullable: false),
+                    ProjectName = table.Column<string>(nullable: true),
+                    DateOfStart = table.Column<DateTime>(nullable: false),
+                    TeamSize = table.Column<int>(nullable: true),
+                    Active = table.Column<bool>(nullable: false),
+                    Status = table.Column<string>(nullable: true),
+                    ClientLocationID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.ProjectID);
+                    table.ForeignKey(
+                        name: "FK_Projects_ClientLocations_ClientLocationID",
+                        column: x => x.ClientLocationID,
+                        principalTable: "ClientLocations",
+                        principalColumn: "ClientLocationID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "ClientLocations",
+                columns: new[] { "ClientLocationID", "ClientLocationName" },
+                values: new object[,]
+                {
+                    { 1, "Boston" },
+                    { 2, "New Delhi" },
+                    { 3, "New Jersy" },
+                    { 4, "New York" },
+                    { 5, "London" },
+                    { 6, "Tokyo" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "ProjectID", "Active", "ClientLocationID", "DateOfStart", "ProjectName", "Status", "TeamSize" },
+                values: new object[] { 2, true, 1, new DateTime(2018, 3, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), "Reporting Tool", "Support", 81 });
+
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "ProjectID", "Active", "ClientLocationID", "DateOfStart", "ProjectName", "Status", "TeamSize" },
+                values: new object[] { 1, true, 2, new DateTime(2017, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hospital Management System", "In Force", 14 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -219,10 +264,18 @@ namespace MvcTaskManager.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_ClientLocationID",
+                table: "Projects",
+                column: "ClientLocationID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ApplicationRoles");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -242,13 +295,13 @@ namespace MvcTaskManager.Migrations
                 name: "Projects");
 
             migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ClientLocations");
         }
     }
 }
