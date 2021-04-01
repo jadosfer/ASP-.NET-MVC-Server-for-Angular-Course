@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MvcTaskManager.Identity;
 using MvcTaskManager.ServiceContracts;
@@ -16,12 +17,14 @@ namespace MvcTaskManager.Controllers
         private readonly IUsersService _usersService;
         private readonly IAntiforgery _antiforgery;
         private readonly ApplicationSignInManager _applicationSignInManager;
+        
 
-        public AccountController(IUsersService usersService, ApplicationSignInManager applicationSignManager, IAntiforgery antiforgery)
+        public AccountController(ApplicationDbContext db, IUsersService usersService, ApplicationSignInManager applicationSignManager, IAntiforgery antiforgery)
         {
             this._usersService = usersService;
             this._applicationSignInManager = applicationSignManager;
             this._antiforgery = antiforgery;
+            
         }
 
         [HttpPost]
@@ -39,5 +42,24 @@ namespace MvcTaskManager.Controllers
 
             return Ok(user);
         }
+
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody] SignUpViewModel signUpViewModel)
+        {
+            var user = await _usersService.Register(signUpViewModel);
+            if (user == null)
+                return BadRequest(new { message = "Invalid Data" });
+
+            HttpContext.User = await _applicationSignInManager.CreateUserPrincipalAsync(user);
+            var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+            Response.Headers.Add("Access-Control-Expose-Headers", "XSRF-REQUEST-TOKEN");
+            Response.Headers.Add("XSRF-REQUEST-TOKEN", tokens.RequestToken);
+
+            return Ok(user);
+        }
+
+       
+
     }
 }

@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace MvcTaskManager
 {
     public class Startup
-    {
+    {        
         public IConfiguration Configuration { get; set; }
         public Startup(IHostingEnvironment env)
         {
@@ -76,6 +76,17 @@ namespace MvcTaskManager
                 options.Cookie.Name = "XSRF-Cookie-TOKEN";
                 options.HeaderName = "X-XSRF-TOKEN";
             });
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequiredUniqueChars = 0;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,7 +110,6 @@ namespace MvcTaskManager
                     role.Name = "Admin";
                     await roleManager.CreateAsync(role);
                 }
-           
 
                 //Create Employee Role
                 if (!(await roleManager.RoleExistsAsync("Employee")))
@@ -107,6 +117,7 @@ namespace MvcTaskManager
                     var role2 = new ApplicationRole();
                     role2.Name = "Employee";
                     await roleManager.CreateAsync(role2);
+
                 }
 
                 //Create Admin User
@@ -121,7 +132,8 @@ namespace MvcTaskManager
                     {
                         await userManager.AddToRoleAsync(user, "Admin");
                     }
-                }
+                }                
+
 
                 //Create Employee User
                 //if ((await userManager.FindByNameAsync("slave")) == null)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MvcTaskManager.Identity
 {
-    public class ApplicationRole : IdentityRole<String>
+    public class ApplicationRole : IdentityRole<String>  
     {
     }
 }
