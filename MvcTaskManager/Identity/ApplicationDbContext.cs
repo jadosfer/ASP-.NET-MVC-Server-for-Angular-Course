@@ -15,7 +15,7 @@ namespace MvcTaskManager.Identity
         public DbSet<ClientLocation> ClientLocations { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
-        public DbSet<IdentityRole> Roles { get; set; }
+        //public DbSet<IdentityRole> Roles { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Skill> Skills { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
