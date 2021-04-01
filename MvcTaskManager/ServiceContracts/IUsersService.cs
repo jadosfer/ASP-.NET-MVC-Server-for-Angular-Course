@@ -11,6 +11,6 @@ namespace MvcTaskManager.ServiceContracts
     {
         Task<ApplicationUser> Authenticate(LoginViewModel loginViewModel);
         Task<ApplicationUser> Register(SignUpViewModel signUpViewModel);
-
+        Task<ApplicationUser> GetUserByEmail(string Email);
     }
 }

@@ -137,9 +137,13 @@ namespace MvcTaskManager.Services
             {
                 return null;
             }
-
         }
 
-
+        public async Task<ApplicationUser> GetUserByEmail(string Email)
+        {
+            return await _applicationUserManager.FindByEmailAsync(Email);
+        }
     }
 }
+
+

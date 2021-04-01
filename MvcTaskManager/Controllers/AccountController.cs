@@ -19,7 +19,7 @@ namespace MvcTaskManager.Controllers
         private readonly ApplicationSignInManager _applicationSignInManager;
         
 
-        public AccountController(ApplicationDbContext db, IUsersService usersService, ApplicationSignInManager applicationSignManager, IAntiforgery antiforgery)
+        public AccountController(IUsersService usersService, ApplicationSignInManager applicationSignManager, IAntiforgery antiforgery)
         {
             this._usersService = usersService;
             this._applicationSignInManager = applicationSignManager;
@@ -59,7 +59,11 @@ namespace MvcTaskManager.Controllers
             return Ok(user);
         }
 
-       
-
+        [Route("api/getUserByEmail/{Email}")]
+        public async Task<IActionResult> GetUserByEmail(string Email)
+        {
+            var user = await _usersService.GetUserByEmail(Email);
+            return Ok(user);
+        }
     }
 }
