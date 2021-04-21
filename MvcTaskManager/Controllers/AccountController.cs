@@ -31,16 +31,23 @@ namespace MvcTaskManager.Controllers
         [Route("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] LoginViewModel loginViewModel)
         {
-            var user = await _usersService.Authenticate(loginViewModel);
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+            if (loginViewModel.Username != null && loginViewModel.Password != null)
+            {
+                var user = await _usersService.Authenticate(loginViewModel);
+                if (user == null)
+                    return BadRequest(new { message = "Username or password is incorrect" });
 
-            HttpContext.User = await _applicationSignInManager.CreateUserPrincipalAsync(user);
-            var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
-            Response.Headers.Add("Access-Control-Expose-Headers", "XSRF-REQUEST-TOKEN");
-            Response.Headers.Add("XSRF-REQUEST-TOKEN", tokens.RequestToken);
+                HttpContext.User = await _applicationSignInManager.CreateUserPrincipalAsync(user);
+                var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+                Response.Headers.Add("Access-Control-Expose-Headers", "XSRF-REQUEST-TOKEN");
+                Response.Headers.Add("XSRF-REQUEST-TOKEN", tokens.RequestToken);
 
-            return Ok(user);
+                return Ok(user);
+            }
+            else
+            {
+                return BadRequest(new { message = "Username or password is incorrect!" });
+            }
         }
 
         [HttpPost]

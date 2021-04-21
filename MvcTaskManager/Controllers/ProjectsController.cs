@@ -26,7 +26,7 @@ namespace MvcTaskManager.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Get()
         {
-            System.Threading.Thread.Sleep(1000);
+            //System.Threading.Thread.Sleep(1000);
             List<Project> projects = db.Projects.Include("ClientLocation").ToList();
 
             List<ProjectViewModel> projectsViewModel = new List<ProjectViewModel>();
@@ -71,9 +71,14 @@ namespace MvcTaskManager.Controllers
         public IActionResult GetProjectByProject(int ProjectID)
         {
             Project project = db.Projects.Include("ClientLocation").Where(temp => temp.ProjectID == ProjectID).FirstOrDefault();
+            if (project != null)
+            {
+                ProjectViewModel projectViewModel = new ProjectViewModel() { ProjectID = project.ProjectID, ProjectName = project.ProjectName, TeamSize = project.TeamSize, DateOfStart = project.DateOfStart.ToString("dd/MM/yyyy"), Active = project.Active, ClientLocation = project.ClientLocation, ClientLocationID = project.ClientLocationID, Status = project.Status };
+                return Ok(projectViewModel);
+            }
+            else
+                return new EmptyResult();
 
-            ProjectViewModel projectViewModel = new ProjectViewModel() { ProjectID = project.ProjectID, ProjectName = project.ProjectName, TeamSize = project.TeamSize, DateOfStart = project.DateOfStart.ToString("dd/MM/yyyy"), Active = project.Active, ClientLocation = project.ClientLocation, ClientLocationID = project.ClientLocationID, Status = project.Status };
-            return Ok(projectViewModel);
         }
 
         [HttpPost]
@@ -82,6 +87,7 @@ namespace MvcTaskManager.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Post([FromBody] Project project)
         {
+            var myProject = project;
             project.ClientLocation = null;
             db.Projects.Add(project);
             db.SaveChanges();
@@ -91,6 +97,7 @@ namespace MvcTaskManager.Controllers
 
             return Ok(projectViewModel);
         }
+
 
         [HttpPut]
         [Route("api/projects")]
