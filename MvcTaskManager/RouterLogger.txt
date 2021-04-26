@@ -1,0 +1,8 @@
+25/4/2021 22:16:21: anonymous navigates to /
+25/4/2021 22:16:27: admin navigates to /admin/dashboard
+25/4/2021 22:16:53: admin navigates to /about
+25/4/2021 22:16:54: admin navigates to /admin/projects
+25/4/2021 22:16:56: admin navigates to /
+25/4/2021 22:16:57: admin navigates to /admin/projects
+25/4/2021 22:16:58: admin navigates to /about
+25/4/2021 22:16:59: admin navigates to /admin/dashboard
