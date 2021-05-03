@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+.hand-icon {
+  cursor: pointer;
+}
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
