@@ -649,46 +649,6 @@ ClientLocationsService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵ
 
 /***/ }),
 
-/***/ "6bg8":
-/*!*****************************************************!*\
-  !*** ./src/app/services/task-priorities.service.ts ***!
-  \*****************************************************/
-/*! exports provided: TaskPrioritiesService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TaskPrioritiesService", function() { return TaskPrioritiesService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-
-
-class TaskPrioritiesService {
-    constructor(httpClient) {
-        this.httpClient = httpClient;
-    }
-    getTaskPriorities() {
-        return this.httpClient.get("/api/taskpriorities", { responseType: "json" });
-    }
-    getTaskPrioritytByTaskPriorityID(TaskPriorityID) {
-        return this.httpClient.get("/api/taskpriorities/searchbytaskpriorityid/" + TaskPriorityID, { responseType: "json" });
-    }
-    insertTaskPriority(newTaskPriority) {
-        return this.httpClient.post("/api/taskpriorities", newTaskPriority, { responseType: "json" });
-    }
-    updateTaskPriority(existingTaskPriority) {
-        return this.httpClient.put("/api/taskpriorities", existingTaskPriority, { responseType: "json" });
-    }
-    deleteTaskPriority(TaskPriorityID) {
-        return this.httpClient.delete("/api/taskpriorities?TaskPriorityID=" + TaskPriorityID);
-    }
-}
-TaskPrioritiesService.ɵfac = function TaskPrioritiesService_Factory(t) { return new (t || TaskPrioritiesService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
-TaskPrioritiesService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: TaskPrioritiesService, factory: TaskPrioritiesService.ɵfac, providedIn: 'root' });
-
-
-/***/ }),
-
 /***/ "8dlv":
 /*!*******************************************************************************!*\
   !*** ./src/app/admin/components/task-priorities/task-priorities.component.ts ***!

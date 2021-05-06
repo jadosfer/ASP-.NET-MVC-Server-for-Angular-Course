@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MvcTaskManager.Identity;
 using MvcTaskManager.Models;
 
@@ -19,6 +20,52 @@ namespace MvcTaskManager.Controllers
             this.db = db;
             this.applicationUserManager = applicationUserManager;
         }
+
+        [HttpGet]
+        [Route("/api/tasks")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public IActionResult Get()
+        {
+            string currentUserId = User.Identity.Name;
+            List<GroupedTask> grouppedTasks = new List<GroupedTask>();
+            List<TaskStatus> taskStatuses = db.TaskStatuses.ToList();
+            List<Task> tasks = db.Tasks
+                .Include(temp => temp.CreatedByUser)
+                .Include(temp => temp.AssignedToUser)
+                .Include(temp => temp.Project).ThenInclude(temp => temp.ClientLocation)
+                .Include(temp => temp.TaskStatusDetails)
+                .Include(temp => temp.TaskPriority)
+                .Where(temp => temp.CreatedBy == currentUserId || temp.AssignedTo == currentUserId)
+                .OrderBy(temp => temp.TaskPriorityID)
+                .ThenByDescending(temp => temp.LastUpdatedOn).ToList();
+
+            foreach (var item in tasks)
+            {
+                item.CreatedOnString = item.CreatedOn.ToString("dd/MM/yyyy");
+                item.LastUpdatedOnString = item.LastUpdatedOn.ToString("dd/MM/yyyy");
+                item.TaskStatusDetails = item.TaskStatusDetails.OrderByDescending(temp => temp.TaskStatusDetailID).ToList();
+
+                foreach (var item2 in item.TaskStatusDetails)
+                {
+                    item2.StatusUpdationDateTimeString = item2.StatusUpdationDateTime.ToString("dd/MM/yyyy");
+                }
+            }
+
+            foreach (var item in taskStatuses)
+            {
+                GroupedTask groupedTask = new GroupedTask();
+                groupedTask.TaskStatusName = item.TaskStatusName;
+                groupedTask.Tasks = tasks.Where(temp => temp.CurrentStatus == item.TaskStatusName).ToList();
+
+                if (groupedTask.Tasks.Count > 0)
+                {
+                    grouppedTasks.Add(groupedTask);
+                }
+            }
+
+            return Ok(grouppedTasks);
+        }
+
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
