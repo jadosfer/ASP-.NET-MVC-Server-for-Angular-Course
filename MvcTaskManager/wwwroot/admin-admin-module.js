@@ -12696,46 +12696,6 @@ return jQuery;
 
 /***/ }),
 
-/***/ "GqYe":
-/*!***************************************************!*\
-  !*** ./src/app/services/task-statuses.service.ts ***!
-  \***************************************************/
-/*! exports provided: TaskStatusesService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TaskStatusesService", function() { return TaskStatusesService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-
-
-class TaskStatusesService {
-    constructor(httpClient) {
-        this.httpClient = httpClient;
-    }
-    getTaskStatuses() {
-        return this.httpClient.get("/api/taskstatuses", { responseType: "json" });
-    }
-    getTaskStatusByTaskStatusID(TaskStatusID) {
-        return this.httpClient.get("/api/taskstatuses/searchbytaskstatusid/" + TaskStatusID, { responseType: "json" });
-    }
-    insertTaskStatus(newTaskStatus) {
-        return this.httpClient.post("/api/taskstatuses", newTaskStatus, { responseType: "json" });
-    }
-    updateTaskStatus(existingTaskStatus) {
-        return this.httpClient.put("/api/taskstatuses", existingTaskStatus, { responseType: "json" });
-    }
-    deleteTaskStatus(TaskStatusID) {
-        return this.httpClient.delete("/api/taskstatuses?TaskStatusID=" + TaskStatusID);
-    }
-}
-TaskStatusesService.ɵfac = function TaskStatusesService_Factory(t) { return new (t || TaskStatusesService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
-TaskStatusesService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: TaskStatusesService, factory: TaskStatusesService.ɵfac, providedIn: 'root' });
-
-
-/***/ }),
-
 /***/ "JxWU":
 /*!***************************************!*\
   !*** ./src/app/models/task-status.ts ***!

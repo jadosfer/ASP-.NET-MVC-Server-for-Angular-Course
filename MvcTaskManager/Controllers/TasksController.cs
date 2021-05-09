@@ -66,6 +66,63 @@ namespace MvcTaskManager.Controllers
             return Ok(grouppedTasks);
         }
 
+        [HttpGet]
+        [Route("/api/tasks/searchbytaskid/{TaskID}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public IActionResult GetByTaskID(int TaskID)
+        {
+            //Get task from database
+            Task task = db.Tasks
+                .Include(temp => temp.CreatedByUser)
+                .Include(temp => temp.AssignedToUser)
+                .Include(temp => temp.Project).ThenInclude(temp => temp.ClientLocation)
+                .Include(temp => temp.TaskStatusDetails)
+                .Include(temp => temp.TaskPriority)
+                .Where(temp => temp.TaskID == TaskID)
+                .FirstOrDefault();
+
+            if (task != null)
+            {
+                //Date conversion
+                task.CreatedOnString = task.CreatedOn.ToString("dd/MM/yyyy");
+                task.LastUpdatedOnString = task.LastUpdatedOn.ToString("dd/MM/yyyy");
+
+                foreach (var item2 in task.TaskStatusDetails)
+                {
+                    item2.StatusUpdationDateTimeString = item2.StatusUpdationDateTime.ToString("dd/MM/yyyy");
+                }
+
+                return Ok(task);
+            }
+            else
+                return NoContent();
+        }
+
+        [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Route("/api/updatetaskstatus")]
+        public IActionResult UpdateTaskStatus([FromBody] TaskStatusDetail taskStatusDetail)
+        {
+            //Insert task status detail
+            taskStatusDetail.UserID = User.Identity.Name;
+            taskStatusDetail.StatusUpdationDateTime = DateTime.Now;
+            taskStatusDetail.StatusUpdationDateTimeString = taskStatusDetail.StatusUpdationDateTime.ToString("dd/MM/yyyy");
+            taskStatusDetail.TaskStatus = null;
+            taskStatusDetail.User = null;
+            db.TaskStatusDetails.Add(taskStatusDetail);
+            db.SaveChanges();
+
+            //Update existing task
+            Task existingTask = db.Tasks.Where(temp => temp.TaskID == taskStatusDetail.TaskID).FirstOrDefault();
+            existingTask.LastUpdatedOn = DateTime.Now;
+            existingTask.CurrentStatus = db.TaskStatuses.Where(temp => temp.TaskStatusID == taskStatusDetail.TaskStatusID).FirstOrDefault().TaskStatusName;
+            existingTask.CurrentTaskStatusID = taskStatusDetail.TaskStatusID;
+            db.SaveChanges();
+
+            return Ok(taskStatusDetail);
+        }
+
+
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

@@ -82,6 +82,41 @@ CountriesService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefine
 
 /***/ }),
 
+/***/ "3kzh":
+/*!********************************!*\
+  !*** ./src/app/models/task.ts ***!
+  \********************************/
+/*! exports provided: Task */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Task", function() { return Task; });
+class Task {
+    constructor() {
+        this.taskID = null;
+        this.taskName = null;
+        this.description = null;
+        this.createdOn = null;
+        this.projectID = null;
+        this.createdBy = null;
+        this.assignedTo = null;
+        this.taskPriority = null;
+        this.taskPriorityID = null;
+        this.lastUpdatedOn = null;
+        this.currentStatus = null;
+        this.project = null;
+        this.createdByUser = null;
+        this.assignedToUser = null;
+        this.taskStatusDetails = null;
+        this.taskStatusDetails = null;
+        this.currentTaskStatusID = null;
+    }
+}
+
+
+/***/ }),
+
 /***/ "4QNZ":
 /*!**************************************************************************!*\
   !*** ./src/app/directives/client-location-status-validator.directive.ts ***!
@@ -572,6 +607,46 @@ AlertDirective.ɵdir = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineDir
 
 /***/ }),
 
+/***/ "GqYe":
+/*!***************************************************!*\
+  !*** ./src/app/services/task-statuses.service.ts ***!
+  \***************************************************/
+/*! exports provided: TaskStatusesService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TaskStatusesService", function() { return TaskStatusesService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+
+
+class TaskStatusesService {
+    constructor(httpClient) {
+        this.httpClient = httpClient;
+    }
+    getTaskStatuses() {
+        return this.httpClient.get("/api/taskstatuses", { responseType: "json" });
+    }
+    getTaskStatusByTaskStatusID(TaskStatusID) {
+        return this.httpClient.get("/api/taskstatuses/searchbytaskstatusid/" + TaskStatusID, { responseType: "json" });
+    }
+    insertTaskStatus(newTaskStatus) {
+        return this.httpClient.post("/api/taskstatuses", newTaskStatus, { responseType: "json" });
+    }
+    updateTaskStatus(existingTaskStatus) {
+        return this.httpClient.put("/api/taskstatuses", existingTaskStatus, { responseType: "json" });
+    }
+    deleteTaskStatus(TaskStatusID) {
+        return this.httpClient.delete("/api/taskstatuses?TaskStatusID=" + TaskStatusID);
+    }
+}
+TaskStatusesService.ɵfac = function TaskStatusesService_Factory(t) { return new (t || TaskStatusesService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
+TaskStatusesService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: TaskStatusesService, factory: TaskStatusesService.ɵfac, providedIn: 'root' });
+
+
+/***/ }),
+
 /***/ "I5Q0":
 /*!********************************************************!*\
   !*** ./src/app/guards/can-deactivate-guard.service.ts ***!
@@ -638,6 +713,32 @@ class CanActivateGuardService {
 }
 CanActivateGuardService.ɵfac = function CanActivateGuardService_Factory(t) { return new (t || CanActivateGuardService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_services_login_service__WEBPACK_IMPORTED_MODULE_1__["LoginService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__["JwtHelperService"])); };
 CanActivateGuardService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: CanActivateGuardService, factory: CanActivateGuardService.ɵfac, providedIn: 'root' });
+
+
+/***/ }),
+
+/***/ "KC8u":
+/*!**********************************************!*\
+  !*** ./src/app/models/task-status-detail.ts ***!
+  \**********************************************/
+/*! exports provided: TaskStatusDetail */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TaskStatusDetail", function() { return TaskStatusDetail; });
+class TaskStatusDetail {
+    constructor() {
+        this.taskStatusDetailID = null;
+        this.taskID = null;
+        this.taskStatusID = null;
+        this.description = null;
+        this.userID = null;
+        this.taskstatus = null;
+        this.user = null;
+        this.statsUpdationDateTimeString = null;
+    }
+}
 
 
 /***/ }),
@@ -853,19 +954,175 @@ SharedModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdefineInje
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UpdateTaskStatusComponent", function() { return UpdateTaskStatusComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _models_task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/task */ "3kzh");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var src_app_models_task_status_detail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/models/task-status-detail */ "KC8u");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _services_tasks_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/tasks.service */ "ptfe");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _services_task_statuses_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/task-statuses.service */ "GqYe");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "ofXK");
 
+
+
+
+
+
+
+
+
+function UpdateTaskStatusComponent_option_32_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "option", 24);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const taskStatus_r2 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("value", taskStatus_r2.taskStatusID);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" ", taskStatus_r2.taskStatusName, " ");
+} }
+function UpdateTaskStatusComponent_span_34_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "span", 25);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](1, " Please select current task status ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+} }
+const _c0 = function () { return ["/employee", "tasks"]; };
 class UpdateTaskStatusComponent {
-    constructor() { }
+    constructor(tasksService, router, taskStatuesService, activatedRoute) {
+        this.tasksService = tasksService;
+        this.router = router;
+        this.taskStatuesService = taskStatuesService;
+        this.activatedRoute = activatedRoute;
+        this.submitted = false; //lo agregué  yo para poder determinar el submitted
+        this.currentTask = new _models_task__WEBPACK_IMPORTED_MODULE_0__["Task"]();
+        this.currentTaskStatusDetail = new src_app_models_task_status_detail__WEBPACK_IMPORTED_MODULE_2__["TaskStatusDetail"]();
+    }
     ngOnInit() {
+        //Receive taskid parameter
+        this.activatedRoute.params.subscribe((params) => {
+            this.taskID = params["taskid"];
+        });
+        //Create reactive form
+        this.editTaskStatusForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            thisStatusDetailID: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](0),
+            taskID: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](null),
+            taskStatusID: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](null)
+        });
+        //get taskstatuses from db for dropdownlist
+        this.taskStatuses = this.taskStatuesService.getTaskStatuses();
+        //get task by taskid
+        this.tasksService.getTaskByTaskID(this.taskID).subscribe((task) => {
+            this.currentTask = task;
+            //Load task details into Reactive form
+            this.currentTaskStatusDetail.taskID = this.taskID;
+            this.currentTaskStatusDetail.description = null;
+            this.currentTaskStatusDetail.taskStatusID = task.currentTaskStatusID;
+            this.currentTaskStatusDetail.taskStatusDetailID = 0;
+            this.editTaskStatusForm.patchValue(this.currentTaskStatusDetail);
+        });
+    }
+    onUpdateTaskStatusClick(event) {
+        this.submitted = true; //esto lo agrego yo
+        this.editTaskStatusForm["submitted"] = true;
+        if (this.editTaskStatusForm.valid) {
+            //send REST-API call to server
+            this.tasksService.updateTaskStatus(this.editTaskStatusForm.value).subscribe((response) => {
+                this.router.navigate(["/employee", "tasks"]);
+            }, (error) => {
+                console.log(error);
+            });
+        }
+        else {
+            console.log(this.editTaskStatusForm.errors);
+        }
     }
 }
-UpdateTaskStatusComponent.ɵfac = function UpdateTaskStatusComponent_Factory(t) { return new (t || UpdateTaskStatusComponent)(); };
-UpdateTaskStatusComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: UpdateTaskStatusComponent, selectors: [["app-update-task-status"]], decls: 2, vars: 0, template: function UpdateTaskStatusComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "update-task-status works!");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ1cGRhdGUtdGFzay1zdGF0dXMuY29tcG9uZW50LnNjc3MifQ== */"] });
+UpdateTaskStatusComponent.ɵfac = function UpdateTaskStatusComponent_Factory(t) { return new (t || UpdateTaskStatusComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_services_tasks_service__WEBPACK_IMPORTED_MODULE_4__["TasksService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_services_task_statuses_service__WEBPACK_IMPORTED_MODULE_6__["TaskStatusesService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"])); };
+UpdateTaskStatusComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({ type: UpdateTaskStatusComponent, selectors: [["app-update-task-status"]], decls: 42, vars: 10, consts: [["novalidate", "novalidate", 3, "formGroup"], [1, "row"], [1, "col-12"], [1, "table", "table-sm", "table-borderless"], [2, "width", "65px"], [1, "fa", "fa-user"], [1, "fa", "fa-calendar"], [1, "text-right"], [1, "fa", "fa-calendar-check-o"], [1, "col-lg-12"], [1, "form-group"], ["for", "description", 1, "text-info"], ["id", "description", "placeholder", "Description", "formControlName", "description", 1, "form-control"], [1, "col-lg-6"], [1, "form-group", "form-row"], ["for", "taskStatusID", 1, "text-info", "col-md-3", "col-form-label"], [1, "col-md-9"], ["id", "taskStatusID", "formControlName", "taskStatusID", 1, "form-control"], ["value", "null"], [3, "value", 4, "ngFor", "ngForOf"], ["class", "text-danger", 4, "ngIf"], [1, "col-lg-12", "border-top", "text-center"], [1, "btn", "btn-success", "btn-lg", "mt-2", 3, "click"], [1, "btn", "btn-info", "btn-sm", "mt-1", 3, "routerLink"], [3, "value"], [1, "text-danger"]], template: function UpdateTaskStatusComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "h1");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](1, "Update Task Status");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](2, "form", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](5, "table", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "tr");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](7, "td", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](8, "Created:");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](9, "td");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](10, "i", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](12, "i", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](14, "td", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](15, "Last Updated on:");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](16, "td");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](17, "i", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](18);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](19, "div", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](20, "div", 10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](21, "label", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](22, "Description:");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](23, "textarea", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](24, "div", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](25, "div", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](26, "label", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](27, "Status:");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](28, "div", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](29, "select", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](30, "option", 18);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](31, "Please Select");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](32, UpdateTaskStatusComponent_option_32_Template, 2, 2, "option", 19);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](33, "async");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](34, UpdateTaskStatusComponent_span_34_Template, 2, 0, "span", 20);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](35, "div", 21);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](36, "div");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](37, "button", 22);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("click", function UpdateTaskStatusComponent_Template_button_click_37_listener($event) { return ctx.onUpdateTaskStatusClick($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](38, "Update Task Status");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](39, "div");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](40, "a", 23);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](41, "Back to Tasks");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("formGroup", ctx.editTaskStatusForm);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" ", ctx.currentTask.createdByUser == null ? null : ctx.currentTask.createdByUser.userName, " \u00A0\u00A0\u00A0 ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" ", ctx.currentTask.createdOn, " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" ", ctx.currentTask.lastUpdatedOn, " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind1"](33, 7, ctx.taskStatuses));
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.editTaskStatusForm.get("taskStatusID").invalid && (ctx.editTaskStatusForm.get("taskStatusID").dirty || ctx.editTaskStatusForm.get("taskStatusID").touched || ctx.submitted) && (ctx.editTaskStatusForm.get("taskStatusID").errors == null ? null : ctx.editTaskStatusForm.get("taskStatusID").errors.required));
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpureFunction0"](9, _c0));
+    } }, directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_z"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgIf"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterLinkWithHref"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_7__["AsyncPipe"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ1cGRhdGUtdGFzay1zdGF0dXMuY29tcG9uZW50LnNjc3MifQ== */"] });
 
 
 /***/ }),
@@ -1529,14 +1786,14 @@ __webpack_require__.r(__webpack_exports__);
 function TasksComponent_div_5_div_9_tr_41_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "tr");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "td");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "i", 14);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "i", 15);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "td", 25);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "td", 26);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "td");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "i", 13);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "i", 14);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](8);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "td");
@@ -1545,9 +1802,12 @@ function TasksComponent_div_5_div_9_tr_41_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const taskStatusDetail_r7 = ctx.$implicit;
+    const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", taskStatusDetail_r7 == null ? null : taskStatusDetail_r7.statusUpdationDateTimeString, " ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", ctx_r5.getTaskGroupTextCssClass(taskStatusDetail_r7 == null ? null : taskStatusDetail_r7.taskStatus == null ? null : taskStatusDetail_r7.taskStatus.taskStatusName));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", taskStatusDetail_r7 == null ? null : taskStatusDetail_r7.taskStatus == null ? null : taskStatusDetail_r7.taskStatus.taskStatusName, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", taskStatusDetail_r7 == null ? null : taskStatusDetail_r7.user == null ? null : taskStatusDetail_r7.user.userName, " ");
@@ -1556,8 +1816,8 @@ function TasksComponent_div_5_div_9_tr_41_Template(rf, ctx) { if (rf & 1) {
 } }
 const _c0 = function (a2) { return ["/employee", "edittask", a2]; };
 function TasksComponent_div_5_div_9_a_47_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "a", 22);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "i", 26);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "a", 23);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "i", 27);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, " Edit ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
@@ -1567,9 +1827,9 @@ function TasksComponent_div_5_div_9_a_47_Template(rf, ctx) { if (rf & 1) {
 const _c1 = function (a2) { return ["/employee", "updatetaskstatus", a2]; };
 function TasksComponent_div_5_div_9_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 10);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 11);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 12);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1578,15 +1838,15 @@ function TasksComponent_div_5_div_9_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "table", 12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "table", 13);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "tr");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "td");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](12, "Created:");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "td");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](14, "i", 13);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](14, "i", 14);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](16, "i", 14);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](16, "i", 15);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](17);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1595,7 +1855,7 @@ function TasksComponent_div_5_div_9_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](20, "Assigned to:");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "td");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](22, "i", 15);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](22, "i", 16);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](23);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1604,13 +1864,13 @@ function TasksComponent_div_5_div_9_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](26, "Project:");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](27, "td");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](28, "i", 16);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](28, "i", 17);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](29);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "table", 17);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](31, "thead", 18);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "table", 18);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](31, "thead", 19);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "th");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](33, "Date");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1625,18 +1885,18 @@ function TasksComponent_div_5_div_9_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](40, "tbody");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](41, TasksComponent_div_5_div_9_tr_41_Template, 11, 4, "tr", 19);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](41, TasksComponent_div_5_div_9_tr_41_Template, 11, 5, "tr", 20);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "div", 20);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](43, "div", 21);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "a", 22);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](45, "i", 23);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "div", 21);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](43, "div", 22);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "a", 23);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](45, "i", 24);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](46, " Change Status ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](47, TasksComponent_div_5_div_9_a_47_Template, 3, 3, "a", 24);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](47, TasksComponent_div_5_div_9_a_47_Template, 3, 3, "a", 25);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1646,7 +1906,9 @@ function TasksComponent_div_5_div_9_Template(rf, ctx) { if (rf & 1) {
     const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"](" #", i_r4 + 1, " \u00A0\u00A0 ", task_r3.taskName, " ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", ctx_r2.getTaskPriorityBadgeCssClass(task_r3.taskPriority == null ? null : task_r3.taskPriority.taskPriorityName));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", task_r3.taskPriority == null ? null : task_r3.taskPriority.taskPriorityName, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](task_r3.description);
@@ -1661,7 +1923,7 @@ function TasksComponent_div_5_div_9_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](12);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", task_r3.taskStatusDetails);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](12, _c1, task_r3.taskID));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](13, _c1, task_r3.taskID));
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", (task_r3.createdByUser == null ? null : task_r3.createdByUser.userName) == ctx_r2.loginService.currentUserName);
 } }
@@ -1679,13 +1941,16 @@ function TasksComponent_div_5_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 8);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](9, TasksComponent_div_5_div_9_Template, 48, 14, "div", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](9, TasksComponent_div_5_div_9_Template, 48, 15, "div", 9);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const taskGroup_r1 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", ctx_r0.getTaskGroupBgCssClass(taskGroup_r1.taskStatusName));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", taskGroup_r1.taskStatusName, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", taskGroup_r1.tasks.length, " ");
@@ -1703,9 +1968,72 @@ class TasksComponent {
             this.taskGroups = response;
         });
     }
+    /* Get background color based on task status */
+    getTaskGroupBgCssClass(taskStatusName) {
+        var className;
+        switch (taskStatusName) {
+            case "Holding":
+                className = "bg-secondary text-white";
+                break; //gray
+            case "Prioritized":
+                className = "bg-primary text-white";
+                break; //blue
+            case "Started":
+                className = "bg-info text-white";
+                break; // light
+            case "Finished":
+                className = "bg-success text-white";
+                break; //green
+            case "Reverted":
+                className = "bg-danger text-white";
+                break; //red
+        }
+        return className;
+    }
+    /* Get background color based on task priority */
+    getTaskPriorityBadgeCssClass(taskPriorityName) {
+        var className;
+        switch (taskPriorityName) {
+            case "Urgent":
+                className = "badge-danger";
+                break; //red
+            case "Normal":
+                className = "badge-primary";
+                break; //blue
+            case "Below Normal":
+                className = "badge-info";
+                break; // light blue
+            case "Low":
+                className = "badge-secondary";
+                break; // gray
+        }
+        return className;
+    }
+    /* Get text color based on task status */
+    getTaskGroupTextCssClass(taskStatusName) {
+        var className;
+        switch (taskStatusName) {
+            case "Holding":
+                className = "text-secondary";
+                break; //gray
+            case "Prioritized":
+                className = "text-primary";
+                break; //blue
+            case "Started":
+                className = "text-info";
+                break; // light blue
+            case "Finished":
+                className = "text-success";
+                break; //green
+            case "Reverted":
+                className = "text-danger";
+                break; //red
+        }
+        return className;
+    }
 }
 TasksComponent.ɵfac = function TasksComponent_Factory(t) { return new (t || TasksComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_tasks_service__WEBPACK_IMPORTED_MODULE_1__["TasksService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"])); };
-TasksComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: TasksComponent, selectors: [["app-tasks"]], decls: 6, vars: 3, consts: [[1, "btn", "btn-primary", 3, "routerLink"], [1, "row", "mt-1", "mb-2"], ["class", "col-lg-6 mb-1", 4, "ngFor", "ngForOf"], [1, "col-lg-6", "mb-1"], [1, "card", "card-primary"], [1, "card-header"], [1, "card-title"], [1, "badge", "badge-warning", "float-right"], [1, "card-body"], ["class", "card mb-1", 4, "ngFor", "ngForOf"], [1, "card", "mb-1"], [1, "badge", "float-right", "mr-1", "badge-primary", 2, "font-size", "15px"], [1, "table", "table-sm", "table-borderless"], [1, "fa", "fa-user"], [1, "fa", "fa-calendar"], [1, "fa", "fa-user-o"], [1, "fa", "fa-briefcase"], [1, "table", "table-sm", "table-bordered"], [1, "table-light"], [4, "ngFor", "ngForOf"], [1, "card-footer"], [1, "btn-group"], [1, "btn", "btn-sm", "btn-outline-secondary", 3, "routerLink"], [1, "fa", "fa-pencil"], ["class", "btn btn-sm btn-outline-secondary", 3, "routerLink", 4, "ngIf"], [1, "text-primary"], [1, "fa", "fa-pencil-square-o"]], template: function TasksComponent_Template(rf, ctx) { if (rf & 1) {
+TasksComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: TasksComponent, selectors: [["app-tasks"]], decls: 6, vars: 3, consts: [[1, "btn", "btn-primary", 3, "routerLink"], [1, "row", "mt-1", "mb-2"], ["class", "col-lg-6 mb-1", 4, "ngFor", "ngForOf"], [1, "col-lg-6", "mb-1"], [1, "card", "card-primary"], [1, "card-header", 3, "ngClass"], [1, "card-title"], [1, "badge", "badge-warning", "float-right"], [1, "card-body"], ["class", "card mb-1", 4, "ngFor", "ngForOf"], [1, "card", "mb-1"], [1, "card-header"], [1, "badge", "float-right", "mr-1", 2, "font-size", "15px", 3, "ngClass"], [1, "table", "table-sm", "table-borderless"], [1, "fa", "fa-user"], [1, "fa", "fa-calendar"], [1, "fa", "fa-user-o"], [1, "fa", "fa-briefcase"], [1, "table", "table-sm", "table-bordered"], [1, "table-light"], [4, "ngFor", "ngForOf"], [1, "card-footer"], [1, "btn-group"], [1, "btn", "btn-sm", "btn-outline-secondary", 3, "routerLink"], [1, "fa", "fa-pencil"], ["class", "btn btn-sm btn-outline-secondary", 3, "routerLink", 4, "ngIf"], [1, "text-primary", 3, "ngClass"], [1, "fa", "fa-pencil-square-o"]], template: function TasksComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Tasks");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1713,14 +2041,14 @@ TasksComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCom
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "Create Task");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div", 1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](5, TasksComponent_div_5_Template, 10, 3, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](5, TasksComponent_div_5_Template, 10, 4, "div", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](2, _c2));
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.taskGroups);
-    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ0YXNrcy5jb21wb25lbnQuc2NzcyJ9 */"] });
+    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgClass"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ0YXNrcy5jb21wb25lbnQuc2NzcyJ9 */"] });
 
 
 /***/ }),
@@ -2203,6 +2531,12 @@ class TasksService {
     }
     getTasks() {
         return this.httpClient.get("/api/tasks", { responseType: "json" });
+    }
+    getTaskByTaskID(TaskID) {
+        return this.httpClient.get("/api/tasks/searchbytaskid/" + TaskID, { responseType: "json" });
+    }
+    updateTaskStatus(taskStatusDetail) {
+        return this.httpClient.put("/api/updatetaskstatus", taskStatusDetail, { responseType: "json" });
     }
     insertTask(newTask) {
         return this.httpClient.post("/api/createtask", newTask, { responseType: "json" });
